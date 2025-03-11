@@ -39,11 +39,11 @@ This is a **NestJS** application that provides a **GraphQL-based API** for manag
    ```
 4. Run the database migrations:
    ```sh
-   npm run migration:run
+   yarn run migration:run
    ```
 5. Start the application:
    ```sh
-   npm run start
+   yarn start
    ```
 6. Open GraphQL Playground at:
    ```
@@ -105,4 +105,4 @@ This is a **NestJS** application that provides a **GraphQL-based API** for manag
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
