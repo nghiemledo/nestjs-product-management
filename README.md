@@ -1,99 +1,108 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Product Management API with GraphQL
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is a **NestJS** application that provides a **GraphQL-based API** for managing products and categories using **MySQL** and **TypeORM**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **GraphQL API** for querying and mutating data
+- **MySQL database** integration with **TypeORM**
+- **CRUD operations** for products and categories
+- **Entity relationships** between products and categories
+- **Resolvers** to handle GraphQL queries and mutations
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Installation
 
-## Project setup
+### Prerequisites
 
-```bash
-$ yarn install
-```
+- **Node.js** (>=16.x)
+- **MySQL** (installed and running)
+- **NestJS CLI** (optional, for development)
 
-## Compile and run the project
+### Steps
 
-```bash
-# development
-$ yarn run start
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/nghiemledo/nestjs-product-management.git
+   cd nestjs-product-management
+   ```
+2. Install dependencies:
+   ```sh
+   yarn install
+   ```
+3. Configure the database connection in `.env`:
+   ```env
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_USER=root
+   DB_PASS=password
+   DB_NAME=product_db
+   ```
+4. Run the database migrations:
+   ```sh
+   npm run migration:run
+   ```
+5. Start the application:
+   ```sh
+   npm run start
+   ```
+6. Open GraphQL Playground at:
+   ```
+   http://localhost:3000/graphql
+   ```
 
-# watch mode
-$ yarn run start:dev
+## Database Schema
 
-# production mode
-$ yarn run start:prod
-```
+### Product Entity
 
-## Run tests
+| Field       | Type   |
+| ----------- | ------ |
+| id          | ID     |
+| name        | String |
+| price       | Float  |
+| description | String |
+| categoryId  | ID     |
 
-```bash
-# unit tests
-$ yarn run test
+### Category Entity
 
-# e2e tests
-$ yarn run test:e2e
+| Field | Type   |
+| ----- | ------ |
+| id    | ID     |
+| name  | String |
 
-# test coverage
-$ yarn run test:cov
-```
+## GraphQL API
 
-## Deployment
+### Queries
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+| Query               | Description        |
+| ------------------- | ------------------ |
+| `products`          | Get all products   |
+| `product(id: ID!)`  | Get product by ID  |
+| `categories`        | Get all categories |
+| `category(id: ID!)` | Get category by ID |
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Mutations
 
-```bash
-$ yarn install -g mau
-$ mau deploy
-```
+| Mutation                                               | Description                |
+| ------------------------------------------------------ | -------------------------- |
+| `createProduct(input: CreateProductInput!)`            | Add a new product          |
+| `updateProduct(id: ID!, input: UpdateProductInput!)`   | Update an existing product |
+| `deleteProduct(id: ID!)`                               | Delete a product           |
+| `createCategory(input: CreateCategoryInput!)`          | Add a new category         |
+| `updateCategory(id: ID!, input: UpdateCategoryInput!)` | Update a category          |
+| `deleteCategory(id: ID!)`                              | Delete a category          |
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Entity Relationships
 
-## Resources
+- Each **Product** belongs to **one Category** (via `categoryId`).
+- Each **Category** can have multiple **Products**.
+- GraphQL **resolvers** return category details for each product.
 
-Check out a few resources that may come in handy when working with NestJS:
+## Development
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Run in watch mode: `yarn start:dev`
+- Run tests: `yarn run test`
+- Build for production: `yarn run build`
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License.
